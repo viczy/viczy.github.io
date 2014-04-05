@@ -4,7 +4,7 @@
   <title><![CDATA[Vic Blog]]></title>
   <link href="http://viczy.github.io/atom.xml" rel="self"/>
   <link href="http://viczy.github.io/"/>
-  <updated>2014-04-05T17:48:38+08:00</updated>
+  <updated>2014-04-05T18:07:21+08:00</updated>
   <id>http://viczy.github.io/</id>
   <author>
     <name><![CDATA[Vic]]></name>
@@ -12,5 +12,14 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Start]]></title>
+    <link href="http://viczy.github.io/blog/2014/04/05/start/"/>
+    <updated>2014-04-05T18:05:30+08:00</updated>
+    <id>http://viczy.github.io/blog/2014/04/05/start</id>
+    <content type="html"><![CDATA[<p>The Blog Start</p>
+]]></content>
+  </entry>
   
 </feed>
