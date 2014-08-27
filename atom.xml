@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Vic Blog]]></title>
+  <title><![CDATA[三每楼]]></title>
   <link href="http://viczy.github.io/atom.xml" rel="self"/>
   <link href="http://viczy.github.io/"/>
-  <updated>2014-04-05T18:07:21+08:00</updated>
+  <updated>2014-08-27T22:25:42+08:00</updated>
   <id>http://viczy.github.io/</id>
   <author>
-    <name><![CDATA[Vic]]></name>
+    <name><![CDATA[vic]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
