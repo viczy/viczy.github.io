@@ -4,7 +4,7 @@
   <title><![CDATA[<三每楼/>]]></title>
   <link href="http://viczy.github.io/atom.xml" rel="self"/>
   <link href="http://viczy.github.io/"/>
-  <updated>2014-11-09T17:09:27+08:00</updated>
+  <updated>2014-11-30T23:19:55+08:00</updated>
   <id>http://viczy.github.io/</id>
   <author>
     <name><![CDATA[vic]]></name>
@@ -12,6 +12,105 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Certificates, Identifiers &amp; Profiles]]></title>
+    <link href="http://viczy.github.io/blog/2014/11/30/certificates-identifiers-and-profiles/"/>
+    <updated>2014-11-30T23:19:11+08:00</updated>
+    <id>http://viczy.github.io/blog/2014/11/30/certificates-identifiers-and-profiles</id>
+    <content type="html"><![CDATA[<p>苹果开发证书的生成是通过上传xxx.csr（rsa加密的签名）给CA生成xxx.cer证书文件。cer证书包括发布的证书，notification_push等功能拓展证书。
+当生成Indentifiers时如果选择拓展的功能的时候，需要有对应的功能拓展证书。
+生成Profiles时，需要选着对应的Indentifier与cer文件。</p>
+
+<h2>certificate</h2>
+
+<p>对于开发者而言，证书有效，Indentifiers和Profiles对应的生成便可。而有效的证书要保证证书在有效期外还要有证书的权限（private key）。</p>
+
+<h3>CSR</h3>
+
+<p>要了解证书签名请求（csr），首先了解RSA</p>
+
+<h4>RSA</h4>
+
+<p>RSA（非对称加密算法）简单的理解就是有一个公钥，一个私钥；公钥加密数据为<code>锁</code>，私钥用来解密数据位<code>钥匙</code>。</p>
+
+<p><em>维基百科上有对rsa签名消息的解释：</em></p>
+
+<pre><code>RSA也可以用来为一个消息署名。假如甲想给乙传递一个署名的消息的话，那么她可以为她的消息计算一个散列值(Message digest)，然后用她的密钥(private key)加密这个散列值并将这个“署名”加在消息的后面。这个消息只有用她的公钥才能被解密。乙获得这个消息后可以用甲的公钥解密这个散列值，然后将这个数据与他自己为这个消息计算的散列值相比较。假如两者相符的话，那么他就可以知道发信人持有甲的密钥，以及这个消息在传播路径上没有被篡改过。
+</code></pre>
+
+<p>如果证书实在生成签名的机器上使用没有问题，但到其他机器上便会遇到找不到私钥，无法使用的情况。</p>
+
+<h3>p12</h3>
+
+<p>对于解决公用证书其他机器没有私钥的解决方法是，在可以使用的机器上导出该证书为.p12格式，并设置密码。在该格式文件中将包含我们证书所需要的私钥。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[iOS屏幕适配]]></title>
+    <link href="http://viczy.github.io/blog/2014/11/30/iosping-mu-gua-pei/"/>
+    <updated>2014-11-30T22:50:08+08:00</updated>
+    <id>http://viczy.github.io/blog/2014/11/30/iosping-mu-gua-pei</id>
+    <content type="html"><![CDATA[<h2>比对表</h2>
+
+<table>
+<thead>
+<tr>
+<th> 型号/参数   </th>
+<th> Iphone3GS-  </th>
+<th> Iphone4+   </th>
+<th>  Iphone5+  </th>
+<th>  Iphone6  </th>
+<th> Iphone6Plus       </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> PT         </td>
+<td>   320X480   </td>
+<td> 320X480    </td>
+<td>  320X568   </td>
+<td>  375X667  </td>
+<td>  414X736          </td>
+</tr>
+<tr>
+<td> 渲染PX      </td>
+<td>   320X480   </td>
+<td> 640X960    </td>
+<td>  640X1136  </td>
+<td>  750X1334 </td>
+<td> 1242X2208         </td>
+</tr>
+<tr>
+<td> 物理PX      </td>
+<td>   320X480   </td>
+<td> 640X960   </td>
+<td>  640X1136  </td>
+<td>  750X1334 </td>
+<td> 1080X1920(1.15)   </td>
+</tr>
+<tr>
+<td> 屏幕大小    </td>
+<td>   3.5&#8221;       </td>
+<td> 3.5&#8221;      </td>
+<td>  4.0&#8221;     </td>
+<td>   4.7&#8221;    </td>
+<td>  5.5&#8221;              </td>
+</tr>
+<tr>
+<td> PPI        </td>
+<td>   163        </td>
+<td> 326       </td>
+<td>  326      </td>
+<td>   326     </td>
+<td>  401              </td>
+</tr>
+</tbody>
+</table>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Ruby环境配置]]></title>

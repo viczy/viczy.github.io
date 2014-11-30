@@ -5,12 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Ssh 免输入密码 - <三每楼/></title>
+  <title>Certificates, Identifiers &amp; Profiles - <三每楼/></title>
   <meta name="author" content="vic">
 
   
-  <meta name="description" content="
-">
+  <meta name="description" content="苹果开发证书的生成是通过上传xxx.csr（rsa加密的签名）给CA生成xxx.cer证书文件。cer证书包括发布的证书，notification_push等功能拓展证书。
+当生成Indentifiers时如果选择拓展的功能的时候，需要有对应的功能拓展证书。
+生成Profiles时， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +20,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://viczy.github.io/blog/2014/08/27/title">
+  <link rel="canonical" href="http://viczy.github.io/blog/2014/11/30/certificates-identifiers-and-profiles">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="<三每楼/>&#8221; type=&#8221;application/atom+xml&#8221;>
@@ -70,7 +71,7 @@
   
   <header>
     
-      <h1 class="entry-title">Ssh 免输入密码</h1>
+      <h1 class="entry-title">Certificates, Identifiers &amp; Profiles</h1>
     
     
       <p class="meta">
@@ -79,14 +80,39 @@
 
 
 
-<time class='entry-date' datetime='2014-08-27T22:39:56+08:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>10:39 pm</span></time>
+<time class='entry-date' datetime='2014-11-30T23:19:11+08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>11:19 pm</span></time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content">
+<div class="entry-content"><p>苹果开发证书的生成是通过上传xxx.csr（rsa加密的签名）给CA生成xxx.cer证书文件。cer证书包括发布的证书，notification_push等功能拓展证书。
+当生成Indentifiers时如果选择拓展的功能的时候，需要有对应的功能拓展证书。
+生成Profiles时，需要选着对应的Indentifier与cer文件。</p>
+
+<h2>certificate</h2>
+
+<p>对于开发者而言，证书有效，Indentifiers和Profiles对应的生成便可。而有效的证书要保证证书在有效期外还要有证书的权限（private key）。</p>
+
+<h3>CSR</h3>
+
+<p>要了解证书签名请求（csr），首先了解RSA</p>
+
+<h4>RSA</h4>
+
+<p>RSA（非对称加密算法）简单的理解就是有一个公钥，一个私钥；公钥加密数据为<code>锁</code>，私钥用来解密数据位<code>钥匙</code>。</p>
+
+<p><em>维基百科上有对rsa签名消息的解释：</em></p>
+
+<pre><code>RSA也可以用来为一个消息署名。假如甲想给乙传递一个署名的消息的话，那么她可以为她的消息计算一个散列值(Message digest)，然后用她的密钥(private key)加密这个散列值并将这个“署名”加在消息的后面。这个消息只有用她的公钥才能被解密。乙获得这个消息后可以用甲的公钥解密这个散列值，然后将这个数据与他自己为这个消息计算的散列值相比较。假如两者相符的话，那么他就可以知道发信人持有甲的密钥，以及这个消息在传播路径上没有被篡改过。
+</code></pre>
+
+<p>如果证书实在生成签名的机器上使用没有问题，但到其他机器上便会遇到找不到私钥，无法使用的情况。</p>
+
+<h3>p12</h3>
+
+<p>对于解决公用证书其他机器没有私钥的解决方法是，在可以使用的机器上导出该证书为.p12格式，并设置密码。在该格式文件中将包含我们证书所需要的私钥。</p>
 </div>
 
 
@@ -102,7 +128,7 @@
 
 
 
-<time class='entry-date' datetime='2014-08-27T22:39:56+08:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>10:39 pm</span></time>
+<time class='entry-date' datetime='2014-11-30T23:19:11+08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>11:19 pm</span></time>
       
 
 
@@ -117,10 +143,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/04/05/start/" title="Previous Post: Start">&laquo; Start</a>
+        <a class="basic-alignment left" href="/blog/2014/11/30/iosping-mu-gua-pei/" title="Previous Post: iOS屏幕适配">&laquo; iOS屏幕适配</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/11/09/rubyhuan-jing-pei-zhi/" title="Next Post: Ruby环境配置">Ruby环境配置 &raquo;</a>
       
     </p>
   </footer>
