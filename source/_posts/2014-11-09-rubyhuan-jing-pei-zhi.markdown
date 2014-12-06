@@ -5,9 +5,9 @@ date: 2014-11-09 13:21:34 +0800
 comments: true
 categories: 
 ---
-# ruby
+<!-- # ruby
 
-![Ruby icon](http://learn-rails.com/images/ruby.png)
+![Ruby icon](http://learn-rails.com/images/ruby.png) -->
 
 ## ruby安装
 
