@@ -4,7 +4,7 @@
   <title><![CDATA[<三每楼/>]]></title>
   <link href="http://viczy.github.io/atom.xml" rel="self"/>
   <link href="http://viczy.github.io/"/>
-  <updated>2014-12-06T17:36:32+08:00</updated>
+  <updated>2014-12-06T17:43:41+08:00</updated>
   <id>http://viczy.github.io/</id>
   <author>
     <name><![CDATA[vic]]></name>
@@ -14,13 +14,11 @@
 
   
   <entry>
-    <title type="html"><![CDATA[网络初]]></title>
+    <title type="html"><![CDATA[网络初窥]]></title>
     <link href="http://viczy.github.io/blog/2014/12/06/wang-luo-chu/"/>
     <updated>2014-12-06T17:36:08+08:00</updated>
     <id>http://viczy.github.io/blog/2014/12/06/wang-luo-chu</id>
-    <content type="html"><![CDATA[<h1>网络初窥</h1>
-
-<h3>DNS</h3>
+    <content type="html"><![CDATA[<h3>DNS</h3>
 
 <p>DNS服务器是计算机域名系统 (Domain Name System 或Domain Name Service) 的缩写，它是由域名解析器和域名服务器组成的。域名服务器是指保存有该网络中所有主机的域名和对应IP地址，并具有将域名转换为IP地址功能的服务器。其中域名必须对应一个IP地址，而IP地址不一定有域名。</p>
 
@@ -201,9 +199,10 @@
     <link href="http://viczy.github.io/blog/2014/12/06/railshuan-jing-pei-zhi/"/>
     <updated>2014-12-06T17:33:48+08:00</updated>
     <id>http://viczy.github.io/blog/2014/12/06/railshuan-jing-pei-zhi</id>
-    <content type="html"><![CDATA[<h1>Rails</h1>
+    <content type="html"><![CDATA[<!-- # Rails
 
-<p><img src="http://upload.wikimedia.org/wikipedia/commons/9/9c/Ruby_on_Rails_logo.jpg" alt="Rails icon" /></p>
+![Rails icon](http://upload.wikimedia.org/wikipedia/commons/9/9c/Ruby_on_Rails_logo.jpg) -->
+
 
 <h2>Rails安装</h2>
 
@@ -475,9 +474,10 @@
     <link href="http://viczy.github.io/blog/2014/11/09/rubyhuan-jing-pei-zhi/"/>
     <updated>2014-11-09T13:21:34+08:00</updated>
     <id>http://viczy.github.io/blog/2014/11/09/rubyhuan-jing-pei-zhi</id>
-    <content type="html"><![CDATA[<h1>ruby</h1>
+    <content type="html"><![CDATA[<!-- # ruby
 
-<p><img src="http://learn-rails.com/images/ruby.png" alt="Ruby icon" /></p>
+![Ruby icon](http://learn-rails.com/images/ruby.png) -->
+
 
 <h2>ruby安装</h2>
 
@@ -617,7 +617,8 @@
     <link href="http://viczy.github.io/blog/2014/08/27/title/"/>
     <updated>2014-08-27T22:39:56+08:00</updated>
     <id>http://viczy.github.io/blog/2014/08/27/title</id>
-    <content type="html"><![CDATA[<h1>ssh免输入</h1>
+    <content type="html"><![CDATA[<!-- #ssh免输入 -->
+
 
 <p>SSH(Secure Shell) 密钥对可以让您方便的登录到 SSH 服务器，而无需输入密码。由于您无需发送您的密码到网络中，SSH 密钥对被认为是更加安全的方式。再加上使用密码短语 (passphrase) 的使用，安全性会更上一层楼。</p>
 
