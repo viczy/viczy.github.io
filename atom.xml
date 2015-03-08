@@ -4,7 +4,7 @@
   <title><![CDATA[<三每楼/>]]></title>
   <link href="http://viczy.github.io/atom.xml" rel="self"/>
   <link href="http://viczy.github.io/"/>
-  <updated>2015-03-08T10:16:05+08:00</updated>
+  <updated>2015-03-08T12:11:38+08:00</updated>
   <id>http://viczy.github.io/</id>
   <author>
     <name><![CDATA[vic]]></name>
@@ -12,6 +12,833 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[TCP/IP协议]]></title>
+    <link href="http://viczy.github.io/blog/2015/03/08/tcp-slash-ipxie-yi/"/>
+    <updated>2015-03-08T10:51:54+08:00</updated>
+    <id>http://viczy.github.io/blog/2015/03/08/tcp-slash-ipxie-yi</id>
+    <content type="html"><![CDATA[<h2>OSI</h2>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">层                    </th>
+<th style="text-align:center;">  数据格式                  </th>
+<th style="text-align:center;">  典型设备</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">应用层(Application)    </td>
+<td style="text-align:center;">                           </td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left;">表现层(Presentation)   </td>
+<td style="text-align:center;">                           </td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left;">会话层(Session)        </td>
+<td style="text-align:center;">                           </td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left;">传输层(Transport)      </td>
+<td style="text-align:center;"> 组成数据段(Segment)        </td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left;">网络层(Network)        </td>
+<td style="text-align:center;"> 分割组成数据包(Packet)      </td>
+<td style="text-align:center;">  路由器</td>
+</tr>
+<tr>
+<td style="text-align:left;">数据链路层(DataLink)   </td>
+<td style="text-align:center;">  比特信息封装成数据帧(Frame)  </td>
+<td style="text-align:center;">  网桥，网卡，交换机</td>
+</tr>
+<tr>
+<td style="text-align:left;">物理层(Physical)       </td>
+<td style="text-align:center;"> 传输比特流(bit)             </td>
+<td style="text-align:center;">  中继器，集线器，线缆与光纤</td>
+</tr>
+</tbody>
+</table>
+
+
+<p><br /></p>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">TCP/IP </th>
+<th style="text-align:center;"> OSI                 </th>
+<th style="text-align:center;"> 相关协议与标准</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">应用层  </td>
+<td style="text-align:center;"> 应用层，表现层，会话层 </td>
+<td style="text-align:center;">  HTTP,FTP,SMTP,POP3,NFS,SSH</td>
+</tr>
+<tr>
+<td style="text-align:left;">传送层  </td>
+<td style="text-align:center;"> 传送层               </td>
+<td style="text-align:center;"> TCP,UDP</td>
+</tr>
+<tr>
+<td style="text-align:left;">网络层  </td>
+<td style="text-align:center;"> 网络层               </td>
+<td style="text-align:center;"> IP,ICMP</td>
+</tr>
+<tr>
+<td style="text-align:left;">链接层  </td>
+<td style="text-align:center;"> 链路层，物理层        </td>
+<td style="text-align:center;"> LAN,ARP,WAN</td>
+</tr>
+</tbody>
+</table>
+
+
+<p><br /></p>
+
+<h4>应用层</h4>
+
+<p>网络服务与使用者应用程序间的一个借口</p>
+
+<h4>表现层</h4>
+
+<p>数据表示，数据安全，数据压缩</p>
+
+<h4>会话层</h4>
+
+<p>建立，管理和终止会话</p>
+
+<h4>传送层</h4>
+
+<p>用一个寻址机制来标识一个特定的应用程序</p>
+
+<h4>网络层</h4>
+
+<p>基于网络层地址（ip地址）进行不同网络系统间的路径选择</p>
+
+<h4>链接层</h4>
+
+<p>在物理层上建立，撤销，标识逻辑链接和链接复用以及差错校验等功能。通过使用接受系统的硬件地址或物理地址来寻址</p>
+
+<h4>物理层</h4>
+
+<p>建立，维护和取消物理连接</p>
+
+<h2>ARP</h2>
+
+<p>地址解析协议（Address Resolution Protocol），其基本功能为通过目标设备的IP地址，查询目标设备的MAC地址，以保证通信的顺利进行。它是IPv4中网络层必不可少的协议，不过在IPv6中已不再适用，并被邻居发现协议（NDP）所替代。</p>
+
+<h4>ARP报文格式</h4>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">0                </th>
+<th style="text-align:right;"> 7                                </th>
+<th style="text-align:left;"> 15                 </th>
+<th style="text-align:right;"> 31</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"></td>
+<td style="text-align:right;"> 硬件类型(Hardware Type)           </td>
+<td style="text-align:left;">                    </td>
+<td style="text-align:right;"> 协议类型(Protocol Type)</td>
+</tr>
+<tr>
+<td style="text-align:left;">硬件长度地址(HLEN) </td>
+<td style="text-align:right;"> 协议长度(PLEN)                    </td>
+<td style="text-align:left;">                    </td>
+<td style="text-align:right;"> 操作类型(Operation)</td>
+</tr>
+<tr>
+<td style="text-align:left;"></td>
+<td style="text-align:right;">                                  </td>
+<td style="text-align:left;">                    </td>
+<td style="text-align:right;"> 发送方硬件地址(Sender HA(Byte0~3))</td>
+</tr>
+<tr>
+<td style="text-align:left;"></td>
+<td style="text-align:right;"> 发送方硬件地址(Sender HA(Byte0~3)) </td>
+<td style="text-align:left;">                    </td>
+<td style="text-align:right;"> 发送方ip地址(Sender IP(Byte0~1))</td>
+</tr>
+<tr>
+<td style="text-align:left;"></td>
+<td style="text-align:right;"> 发送方ip地址(Sender IP(Byte2~3))   </td>
+<td style="text-align:left;">                    </td>
+<td style="text-align:right;"> 接收方硬件地址(Target HA(Byte0~1))</td>
+</tr>
+<tr>
+<td style="text-align:left;"></td>
+<td style="text-align:right;">                                  </td>
+<td style="text-align:left;">                    </td>
+<td style="text-align:right;"> 接受方硬件地址(Target HA(Byte2~5))</td>
+</tr>
+<tr>
+<td style="text-align:left;"></td>
+<td style="text-align:right;">                                  </td>
+<td style="text-align:left;">                    </td>
+<td style="text-align:right;"> 接收方ip地址(Target HA(Byte0~3))</td>
+</tr>
+</tbody>
+</table>
+
+
+<p><br /></p>
+
+<h5>硬件类型</h5>
+
+<p>指明了发送方想知道的硬件接口类型，以太网的值为1；</p>
+
+<h5>协议类型</h5>
+
+<p>指明了发送方提供的高层协议类型，IP为0800（16进制）；</p>
+
+<h5>硬件地址长度和协议长度</h5>
+
+<p>指明了硬件地址和高层协议地址的长度，这样ARP报文就可以在任意硬件和任意协议的网络中使用；</p>
+
+<h5>操作类型</h5>
+
+<p>用来表示这个报文的类型，ARP请求为1，ARP响应为2，RARP请求为3，RARP响应为4；</p>
+
+<h5>发送方硬件地址（0-3字节）</h5>
+
+<p>源主机硬件地址的前3个字节；</p>
+
+<h5>发送方硬件地址（4-5字节）</h5>
+
+<p>源主机硬件地址的后3个字节；</p>
+
+<h5>发送方IP地址（0-1字节）</h5>
+
+<p>源主机硬件地址的前2个字节；</p>
+
+<h5>发送方IP地址（2-3字节）</h5>
+
+<p>源主机硬件地址的后2个字节；</p>
+
+<h5>目标硬件地址（0-1字节）</h5>
+
+<p>目的主机硬件地址的前2个字节；</p>
+
+<h5>目标硬件地址（2-5字节）</h5>
+
+<p>目的主机硬件地址的后4个字节；</p>
+
+<h5>目标IP地址（0-3字节）</h5>
+
+<p>目的主机的IP地址。</p>
+
+<h2>TCP</h2>
+
+<p>传输控制协议（英语：Transmission Control Protocol, TCP）是一种面向连接的、可靠的、基于字节流的传输层通信协议，由IETF的RFC793定义。在简化的计算机网络OSI模型中，它完成第四层传输层所指定的功能，用户数据报协议（UDP）是同一层内另一个重要的传输协议。</p>
+
+<h4>TCP报文格式</h4>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">偏移     </th>
+<th style="text-align:right;"> Byte0~3               </th>
+<th style="text-align:right;"> 4~9                  </th>
+<th style="text-align:right;"> 10~15                 </th>
+<th style="text-align:right;"> 16~31</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">0       </td>
+<td style="text-align:right;">                       </td>
+<td style="text-align:right;">                      </td>
+<td style="text-align:right;"> 源端口号(Source Port) </td>
+<td style="text-align:right;"> 目的端口号(Destination Port)</td>
+</tr>
+<tr>
+<td style="text-align:left;">32      </td>
+<td style="text-align:right;">                       </td>
+<td style="text-align:right;">                      </td>
+<td style="text-align:right;">                      </td>
+<td style="text-align:right;"> 序号(Sequence Number)</td>
+</tr>
+<tr>
+<td style="text-align:left;">64      </td>
+<td style="text-align:right;">                       </td>
+<td style="text-align:right;">                      </td>
+<td style="text-align:right;">                      </td>
+<td style="text-align:right;"> 确认号(Acknowledgemen Number)</td>
+</tr>
+<tr>
+<td style="text-align:left;">96      </td>
+<td style="text-align:right;"> 数据偏移(Date Offest)  </td>
+<td style="text-align:right;"> 保留(Reserved)        </td>
+<td style="text-align:right;"> 标示符                </td>
+<td style="text-align:right;"> 窗口大小(Window)</td>
+</tr>
+<tr>
+<td style="text-align:left;">128     </td>
+<td style="text-align:right;">                       </td>
+<td style="text-align:right;">                      </td>
+<td style="text-align:right;"> 检验码(Checksum)      </td>
+<td style="text-align:right;"> 紧急数据指针(Urgent Pointer)</td>
+</tr>
+<tr>
+<td style="text-align:left;">160     </td>
+<td style="text-align:right;">                                                                     </td>
+<td style="text-align:right;"> 选项(options)</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left;">192+    </td>
+<td style="text-align:right;">                                                                     </td>
+<td style="text-align:right;"> 数据(Data)</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+
+<p><br /></p>
+
+<h5>源端口号</h5>
+
+<p>本地通信端口</p>
+
+<h5>目的端口号</h5>
+
+<p>远地通信端口</p>
+
+<h5>序号</h5>
+
+<p>数据部分第一字节的序列号</p>
+
+<h5>确认号</h5>
+
+<p>表示本地希望接收得下一个数据字节的序号</p>
+
+<h5>数据偏移</h5>
+
+<p>该TCP段中数据起始的位置</p>
+
+<h5>保留</h5>
+
+<p>该域保留，置位为0</p>
+
+<h5>标示符</h5>
+
+<ul>
+<li>URG:紧急数据指针有效标志，指示本段中包含紧急数据</li>
+<li>ACK:确认标志，指示段中确认号有效</li>
+<li>PST:复位连接标志，指示本段为复位段</li>
+<li>RSH:PUSH操作标志</li>
+<li>SYN:建立同步连接标志</li>
+<li>FIN:本地数据发送结束，终止链接标志</li>
+</ul>
+
+
+<h5>窗口大小</h5>
+
+<p>本地接受窗口（接受缓冲区）大小</p>
+
+<h5>校验和</h5>
+
+<p>包括TCP报头和数据在内的校验和</p>
+
+<h5>紧急数据指针</h5>
+
+<p>指示从发送数据序列号开始到紧急数据之后的第一个字节偏移</p>
+
+<h5>选项</h5>
+
+<p>提供任选服务</p>
+
+<h5>数据</h5>
+
+<p>保证TCP报头以32位为边界对齐</p>
+
+<h2>IP</h2>
+
+<p>网际协议（Internet Protocol），是用于报文交换网络的一种面向数据的协议。</p>
+
+<p>IP是在TCP/IP协议中网络层的主要协议，任务是仅仅根据源主机和目的主机的地址传送数据。为此目的，IP定义了寻址方法和数据报的封装结构 。第一个架构的主要版本，现在称为IPv4，仍然是最主要的互联网协议，尽管世界各地正在积极部署IPv6。</p>
+
+<h4>IP报文格式</h4>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">0            </th>
+<th style="text-align:right;"> 3             </th>
+<th style="text-align:right;"> 7                  </th>
+<th style="text-align:right;"> 15        </th>
+<th style="text-align:right;"> 18              </th>
+<th style="text-align:right;"> 31</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">版本         </td>
+<td style="text-align:right;"> 标头长度        </td>
+<td style="text-align:right;"> 服务类型            </td>
+<td style="text-align:right;">           </td>
+<td style="text-align:right;">                 </td>
+<td style="text-align:right;"> 封包总长</td>
+</tr>
+<tr>
+<td style="text-align:left;"></td>
+<td style="text-align:right;">               </td>
+<td style="text-align:right;"> 识别码              </td>
+<td style="text-align:right;"> 旗标       </td>
+<td style="text-align:right;">                 </td>
+<td style="text-align:right;"> 分割定位</td>
+</tr>
+<tr>
+<td style="text-align:left;"></td>
+<td style="text-align:right;"> 存活时间       </td>
+<td style="text-align:right;"> 协定                </td>
+<td style="text-align:right;">           </td>
+<td style="text-align:right;">                 </td>
+<td style="text-align:right;"> 标头检验值</td>
+</tr>
+<tr>
+<td style="text-align:left;"></td>
+<td style="text-align:right;">               </td>
+<td style="text-align:right;">                    </td>
+<td style="text-align:right;">           </td>
+<td style="text-align:right;">                 </td>
+<td style="text-align:right;"> 源地址</td>
+</tr>
+<tr>
+<td style="text-align:left;"></td>
+<td style="text-align:right;">               </td>
+<td style="text-align:right;">                    </td>
+<td style="text-align:right;">           </td>
+<td style="text-align:right;">                 </td>
+<td style="text-align:right;"> 目的地址</td>
+</tr>
+<tr>
+<td style="text-align:left;"></td>
+<td style="text-align:right;"> 可选           </td>
+<td style="text-align:right;">                    </td>
+<td style="text-align:right;">           </td>
+<td style="text-align:right;">                 </td>
+<td style="text-align:right;"> 填充</td>
+</tr>
+<tr>
+<td style="text-align:left;"></td>
+<td style="text-align:right;">               </td>
+<td style="text-align:right;">                    </td>
+<td style="text-align:right;">           </td>
+<td style="text-align:right;">                 </td>
+<td style="text-align:right;"> 数据</td>
+</tr>
+</tbody>
+</table>
+
+
+<p><br /></p>
+
+<h5>版本（Version）</h5>
+
+<p>IP规格版本，目前IP多为版本4，所以这里通常为0x4</p>
+
+<h5>标头长度（Internet Header Length）</h5>
+
+<p>在Option和Padding没有设定的情况下，标头只有5行的长度，每行4Byte，共20Byte；所以这里通常为0x14</p>
+
+<h5>服务类型（Type of Service）</h5>
+
+<p>IP封包在传送过程中的服务类型，由8个bit组成，每组bit组合代表不同的意思。</p>
+
+<ul>
+<li>000&hellip;..  Routine       设定IP顺序，预设为0，否则数值越高越优先</li>
+<li>&hellip;0&hellip;.  Delay         延迟要求，0为正常值，1为低要求</li>
+<li>&hellip;.0&hellip;  Throughput    通讯量要求，0为正常值，1为高要求</li>
+<li>&hellip;..0..  Reliability   可靠性要求，0为正常值，1为高要求</li>
+<li>&hellip;&hellip;00  Not Used      未使用</li>
+</ul>
+
+
+<h5>封包总长（Total Length）</h5>
+
+<p>通常以Byte做单位来表示该封包的总长度，此数值包括标头和数据的总和</p>
+
+<h5>识别码 （Identification）</h5>
+
+<p>每一个IP封包都有一个16bit的唯一识识别码。当程式产生的数据要通过网络传送时，都会在传送层被拆散成封包形式发送，当封包要进行重组的时候，就是依据这个ID。</p>
+
+<h5>旗标（Flag）</h5>
+
+<p>这是当封包在传送过程中进行最佳组合时使用的3个bit的识别记号。</p>
+
+<ul>
+<li><ol>
+<li>  当此值为0的时候，表示目前未被使用。</li>
+</ol>
+</li>
+<li>.0..  当此值为0的时候，表示封包可以被分割，若为1则不能被分割</li>
+<li>..0.  当上一个值为0时，此值为0就表示该封包是最后一个封包，如果为1则表示其后还有被分割的封包</li>
+</ul>
+
+
+<h5>分割定位（Fragment Offset）</h5>
+
+<p>当一个大封包在经过一些传输单位（MTU）较小的路径时，会被切割成碎片（fragment）再进行传送（这个切割和传送层的打包有所不同，它是由网络层决定的）。由于网络情况或其他因素影响，其抵达顺序并不会和当初切割顺序一致的。所以当封包进行切割的时候，会为各片段做好定位记录，如果封包没有被切割，那么值为0</p>
+
+<h5>存活时间（Time To Live）</h5>
+
+<p>当一个封包被赋予TTL值，TTL是以hop为单位，没经过一个router就减一，如果封包TTL值被降为0的时候，就会被丢弃。这样，当封包在传送过程中由于某些原因而未能抵达目的地的时候，就可以避免其一直充斥在网络上面。</p>
+
+<h5>协定（Protocol）</h5>
+
+<p>这里指的是该封包所使用的网络协议类型。各协议的代号如下：</p>
+
+<ul>
+<li>ip      0       IP              # internet protocol, pseudo protocol number</li>
+<li>icmp    1       ICMP            # internet control message protocol</li>
+<li>igmp    2       IGMP            # Internet Group Management</li>
+<li>ggp     3       GGP             # gateway-gateway protocol</li>
+<li>ipencap 4       IP-ENCAP        # IP encapsulated in IP (officially &ldquo;IP&rdquo;)</li>
+<li>st      5       ST              # ST datagram mode</li>
+<li>tcp     6       TCP             # transmission control protocol</li>
+<li>egp     8       EGP             # exterior gateway protocol</li>
+<li>pup     12      PUP             # PARC universal packet protocol</li>
+<li>udp     17      UDP             # user datagram protocol</li>
+<li>hmp     20      HMP             # host monitoring protocol</li>
+<li>xns-idp 22      XNS-IDP         # Xerox NS IDP</li>
+<li>rdp     27      RDP             # &ldquo;reliable datagram&rdquo; protocol</li>
+<li>iso-tp4 29      ISO-TP4         # ISO Transport Protocol class 4</li>
+<li>xtp     36      XTP             # Xpress Tranfer Protocol</li>
+<li>ddp     37      DDP             # Datagram Delivery Protocol</li>
+<li>idpr-cmtp       39      IDPR-CMTP       # IDPR Control Message Transport</li>
+<li>rspf    73      RSPF            #Radio Shortest Path First.</li>
+<li>vmtp    81      VMTP            # Versatile Message Transport</li>
+<li>ospf    89      OSPFIGP         # Open Shortest Path First IGP</li>
+<li>ipip    94      IPIP            # Yet Another IP encapsulation</li>
+<li>encap   98      ENCAP           # Yet Another IP encapsulation</li>
+</ul>
+
+
+<h5>标头检验值（Header Checksum）</h5>
+
+<p>这个数值主要是用来检错用的，用以确保封包被正确无误的接收到。如果一切无误，就会发出确认信息，表示接收正常。</p>
+
+<h5>源地址（Source IP Address）</h5>
+
+<p>发送端IP地址。</p>
+
+<h5>目的地址（Destination IP Address）</h5>
+
+<p>接收端IP地址。</p>
+
+<h5>可选&amp;填充（Options&amp;Padding）</h5>
+
+<p>Options长度不定，可用来扩充功能。
+Padding是为了让表头刚好是4Byte的倍数。</p>
+
+<h5>数据（Data）</h5>
+
+<h2>ICMP</h2>
+
+<p>ICMP（Internet Control Message Protocol）是Internet控制报文协议。它是TCP/IP协议族的一个子协议，用于在IP主机、路由器之间传递控制消息。控制消息是指网络通不通、主机是否可达、路由是否可用等网络本身的消息。这些控制消息虽然并不传输用户数据，但是对于用户数据的传递起着重要的作用。</p>
+
+<h4>ICMP报文格式</h4>
+
+<p>ICMP报头从IP报头的第160位开始（例外：除非使用了IP报头的可选部分）</p>
+
+<p>0            | 7                   | 15                              | 31
+:&mdash;&mdash;&mdash;-  | &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;: | &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;: | &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-:
+类型          | 代码                |                                 | 检验和
+             | 标识符               |                                 | 序列号<br/>
+             |                     |                                 | 选项
+<br /></p>
+
+<h5>类型（type）</h5>
+
+<p>ICMP的类型</p>
+
+<h5>代码（code）</h5>
+
+<p>进一步分割ICMP的类型；</p>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:center;">type </th>
+<th style="text-align:center;"> code </th>
+<th style="text-align:left;"> description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">0    </td>
+<td style="text-align:center;"> 0    </td>
+<td style="text-align:left;"> Echo Reply —— 回显应答（Ping 应答）</td>
+</tr>
+<tr>
+<td style="text-align:center;">3    </td>
+<td style="text-align:center;"> 0    </td>
+<td style="text-align:left;"> Network Unreachable —— 网络不可达</td>
+</tr>
+<tr>
+<td style="text-align:center;">3    </td>
+<td style="text-align:center;"> 1    </td>
+<td style="text-align:left;"> Host Unreachable —— 主机不可达</td>
+</tr>
+<tr>
+<td style="text-align:center;">3    </td>
+<td style="text-align:center;"> 2    </td>
+<td style="text-align:left;"> Protocol Unreachable —— 协议不可达</td>
+</tr>
+<tr>
+<td style="text-align:center;">3    </td>
+<td style="text-align:center;"> 3    </td>
+<td style="text-align:left;"> Port Unreachable —— 端口不可达</td>
+</tr>
+<tr>
+<td style="text-align:center;">3    </td>
+<td style="text-align:center;"> 4    </td>
+<td style="text-align:left;"> Fragmentation needed but no frag bit set —— 需要进行分片但设置不分片比特</td>
+</tr>
+<tr>
+<td style="text-align:center;">3    </td>
+<td style="text-align:center;"> 5    </td>
+<td style="text-align:left;"> Source routing failed —— 源站选路失败</td>
+</tr>
+<tr>
+<td style="text-align:center;">3    </td>
+<td style="text-align:center;"> 6    </td>
+<td style="text-align:left;"> Destination network unknown —— 目的网络未知</td>
+</tr>
+<tr>
+<td style="text-align:center;">3    </td>
+<td style="text-align:center;"> 7    </td>
+<td style="text-align:left;"> Destination host unknown —— 目的主机未知</td>
+</tr>
+<tr>
+<td style="text-align:center;">3    </td>
+<td style="text-align:center;"> 8    </td>
+<td style="text-align:left;"> Source host isolated（obsolete）—— 源主机被隔离（作废不用）</td>
+</tr>
+<tr>
+<td style="text-align:center;">3    </td>
+<td style="text-align:center;"> 9    </td>
+<td style="text-align:left;"> Destination network administratively prohibited —— 目的网络被强制禁止</td>
+</tr>
+<tr>
+<td style="text-align:center;">3    </td>
+<td style="text-align:center;"> 10   </td>
+<td style="text-align:left;"> Destination host administratively prohibited —— 目的主机被强制禁止</td>
+</tr>
+<tr>
+<td style="text-align:center;">3    </td>
+<td style="text-align:center;"> 11   </td>
+<td style="text-align:left;"> Network unreachable for TOS——由于服务类型TOS，网络不可达</td>
+</tr>
+<tr>
+<td style="text-align:center;">3    </td>
+<td style="text-align:center;"> 12   </td>
+<td style="text-align:left;"> Host unreachable for TOS——由于服务类型TOS，主机不可达</td>
+</tr>
+<tr>
+<td style="text-align:center;">3    </td>
+<td style="text-align:center;"> 13   </td>
+<td style="text-align:left;"> Communication administratively prohibited by filtering——由于过滤，通信被强制禁止</td>
+</tr>
+<tr>
+<td style="text-align:center;">3    </td>
+<td style="text-align:center;"> 14   </td>
+<td style="text-align:left;"> Host precedence violation——主机越权</td>
+</tr>
+<tr>
+<td style="text-align:center;">3    </td>
+<td style="text-align:center;"> 15   </td>
+<td style="text-align:left;"> Precedence cutoff in effect——优先中止生效</td>
+</tr>
+<tr>
+<td style="text-align:center;">4    </td>
+<td style="text-align:center;"> 0    </td>
+<td style="text-align:left;"> Source quench——源端被关闭（基本流控制）</td>
+</tr>
+<tr>
+<td style="text-align:center;">5    </td>
+<td style="text-align:center;"> 0    </td>
+<td style="text-align:left;"> Redirect for network——对网络重定向</td>
+</tr>
+<tr>
+<td style="text-align:center;">5    </td>
+<td style="text-align:center;"> 1    </td>
+<td style="text-align:left;"> Redirect for host——对主机重定向</td>
+</tr>
+<tr>
+<td style="text-align:center;">5    </td>
+<td style="text-align:center;"> 2    </td>
+<td style="text-align:left;"> Redirect for TOS and network——对服务类型和网络重定向</td>
+</tr>
+<tr>
+<td style="text-align:center;">5    </td>
+<td style="text-align:center;"> 3    </td>
+<td style="text-align:left;"> Redirect for TOS and host——对服务类型和主机重定向</td>
+</tr>
+<tr>
+<td style="text-align:center;">8    </td>
+<td style="text-align:center;"> 0    </td>
+<td style="text-align:left;"> Echo request——回显请求（Ping请求）</td>
+</tr>
+<tr>
+<td style="text-align:center;">9    </td>
+<td style="text-align:center;"> 0    </td>
+<td style="text-align:left;"> Router advertisement——路由器通告</td>
+</tr>
+<tr>
+<td style="text-align:center;">10   </td>
+<td style="text-align:center;"> 0    </td>
+<td style="text-align:left;"> Route solicitation——路由器请求</td>
+</tr>
+<tr>
+<td style="text-align:center;">11   </td>
+<td style="text-align:center;"> 0    </td>
+<td style="text-align:left;"> TTL equals 0 during transit——传输期间生存时间为0</td>
+</tr>
+<tr>
+<td style="text-align:center;">11   </td>
+<td style="text-align:center;"> 1    </td>
+<td style="text-align:left;"> TTL equals 0 during reassembly——在数据报组装期间生存时间为0</td>
+</tr>
+<tr>
+<td style="text-align:center;">12   </td>
+<td style="text-align:center;"> 0    </td>
+<td style="text-align:left;"> IP header bad (catchall error)——坏的IP首部（包括各种差错）</td>
+</tr>
+<tr>
+<td style="text-align:center;">12   </td>
+<td style="text-align:center;"> 1    </td>
+<td style="text-align:left;"> Required options missing——缺少必需的选项</td>
+</tr>
+<tr>
+<td style="text-align:center;">13   </td>
+<td style="text-align:center;"> 0    </td>
+<td style="text-align:left;"> Timestamp request (obsolete)——时间戳请求（作废不用）</td>
+</tr>
+<tr>
+<td style="text-align:center;">14   </td>
+<td style="text-align:center;">      </td>
+<td style="text-align:left;"> Timestamp reply (obsolete)——时间戳应答（作废不用）</td>
+</tr>
+<tr>
+<td style="text-align:center;">15   </td>
+<td style="text-align:center;"> 0    </td>
+<td style="text-align:left;"> Information request (obsolete)——信息请求（作废不用）</td>
+</tr>
+<tr>
+<td style="text-align:center;">16   </td>
+<td style="text-align:center;"> 0    </td>
+<td style="text-align:left;"> Information reply (obsolete)——信息应答（作废不用）</td>
+</tr>
+<tr>
+<td style="text-align:center;">17   </td>
+<td style="text-align:center;"> 0    </td>
+<td style="text-align:left;"> Address mask request——地址掩码请求</td>
+</tr>
+<tr>
+<td style="text-align:center;">18   </td>
+<td style="text-align:center;"> 0    </td>
+<td style="text-align:left;"> Address mask reply——地址掩码应答</td>
+</tr>
+</tbody>
+</table>
+
+
+<p><br /></p>
+
+<h5>检验和（checksum）</h5>
+
+<p>这个字段包含有从ICMP报头和数据部分计算得来的，用于检查错误的数据，其中此校验码字段的值视为0。</p>
+
+<h5>标识符（Identifier）</h5>
+
+<p>这个字段包含ID值，在Echo Reply 类型的消息中要返回这个字段。</p>
+
+<h5>序列号（sequence）</h5>
+
+<p>这个字段包含一个序号，同样要在echo reply类型的消息中要返回这个字段。</p>
+
+<h5>选项</h5>
+
+<p>可无。</p>
+
+<h4>参考资料</h4>
+
+<ul>
+<li><a href="http://www.study-area.org/network/networkfr.htm">http://www.study-area.org/network/networkfr.htm</a></li>
+<li><a href="http://zh.wikipedia.org/wiki/TCP/IP%E5%8D%8F%E8%AE%AE%E6%97%8F">http://zh.wikipedia.org/wiki/TCP/IP%E5%8D%8F%E8%AE%AE%E6%97%8F</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[iOS Pod]]></title>
+    <link href="http://viczy.github.io/blog/2015/03/08/ios-pod/"/>
+    <updated>2015-03-08T10:42:50+08:00</updated>
+    <id>http://viczy.github.io/blog/2015/03/08/ios-pod</id>
+    <content type="html"><![CDATA[<h2>pod文件样本</h2>
+
+<pre><code>source 'https://github.com/CocoaPods/Specs.git'
+
+# platform :ios
+platform :ios, '6.0'
+
+# ignore all warnings from all pods
+inhibit_all_warnings!
+
+#Network
+pod 'AFNetworking'
+pod 'SDWebImage'    #功能类似UIImageView+AFNetworking
+pod 'UIActivityIndicator-for-SDWebImage' #SDWebImage的拓展模块
+
+#View
+pod 'TPKeyboardAvoiding'    #根据键盘滑动的各类ScrollView
+pod 'EAIntroView'   #引导页面
+pod 'AwesomeMenu', '~&gt; 1.0.0'   #path菜单
+pod 'RESideMenu', '~&gt; 4.0.7'    #侧边菜单
+pod 'REMenu', '~&gt; 1.10'     #下拉菜单
+pod 'MRProgress', '~&gt; 0.8.1'    #hud(ios7)
+pod 'MBProgressHUD', '~&gt; 0.8'   #hud
+pod 'SVProgressHUD'     #hud
+pod 'MMProgressHUD', :git =&gt; 'https://github.com/lanvige/MMProgressHUD' #hud
+pod 'MMSuperViewController', :git =&gt; 'https://github.com/lanvige/MMSuperViewController.git'     #下拉刷新
+pod 'VTextView', :git =&gt; 'https://github.com/viczy/VTextView.git'   #类似微博文版
+pod 'VPageScrollView', :git =&gt; 'https://github.com/viczy/VPageScrollView.git'   #滚动页（可循环）
+pod 'VPopImageView', :git =&gt; 'https://github.com/viczy/VPopImageView.git'   #可弹出的imageview
+
+#Data
+pod 'NSString+Pinyin'   #中文字母化
+pod 'RegexKitLite'  #正则
+pod 'SSZipArchive'  #压缩
+pod 'FMDB'  #数据库
+pod 'Mantle'    #数据处理
+pod 'JSONKit-NoWarning' #josn
+
+#Tool
+pod 'CocoaLumberjack'   #log
+pod 'ReactiveCocoa'     #函数式编程
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[网络初窥]]></title>

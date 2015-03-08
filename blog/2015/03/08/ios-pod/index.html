@@ -5,11 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>iOS屏幕适配 - <三每楼/></title>
+  <title>iOS Pod - <三每楼/></title>
   <meta name="author" content="vic">
 
   
-  <meta name="description" content="比对表 型号/参数 Iphone3GS- Iphone4+ Iphone5+ Iphone6 Iphone6Plus PT 320X480 320X480 320X568 375X667 414X736 渲染PX 320X480 640X960 640X1136 750X1334 &hellip;">
+  <meta name="description" content="pod文件样本 source 'https://github.com/CocoaPods/Specs.git' # platform :ios
+platform :ios, '6.0' # ignore all warnings from all pods
+inhibit_all_warnings &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +20,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://viczy.github.io/blog/2014/11/30/iosping-mu-gua-pei">
+  <link rel="canonical" href="http://viczy.github.io/blog/2015/03/08/ios-pod">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="<三每楼/>&#8221; type=&#8221;application/atom+xml&#8221;>
@@ -72,7 +74,7 @@
   
   <header>
     
-      <h1 class="entry-title">iOS屏幕适配</h1>
+      <h1 class="entry-title">iOS Pod</h1>
     
     
       <p class="meta">
@@ -81,70 +83,55 @@
 
 
 
-<time class='entry-date' datetime='2014-11-30T22:50:08+08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>10:50 pm</span></time>
+<time class='entry-date' datetime='2015-03-08T10:42:50+08:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>10:42 am</span></time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h2>比对表</h2>
+<div class="entry-content"><h2>pod文件样本</h2>
 
-<table>
-<thead>
-<tr>
-<th> 型号/参数   </th>
-<th> Iphone3GS-  </th>
-<th> Iphone4+   </th>
-<th>  Iphone5+  </th>
-<th>  Iphone6  </th>
-<th> Iphone6Plus       </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> PT         </td>
-<td>   320X480   </td>
-<td> 320X480    </td>
-<td>  320X568   </td>
-<td>  375X667  </td>
-<td>  414X736          </td>
-</tr>
-<tr>
-<td> 渲染PX      </td>
-<td>   320X480   </td>
-<td> 640X960    </td>
-<td>  640X1136  </td>
-<td>  750X1334 </td>
-<td> 1242X2208         </td>
-</tr>
-<tr>
-<td> 物理PX      </td>
-<td>   320X480   </td>
-<td> 640X960   </td>
-<td>  640X1136  </td>
-<td>  750X1334 </td>
-<td> 1080X1920(1.15)   </td>
-</tr>
-<tr>
-<td> 屏幕大小    </td>
-<td>   3.5&#8221;       </td>
-<td> 3.5&#8221;      </td>
-<td>  4.0&#8221;     </td>
-<td>   4.7&#8221;    </td>
-<td>  5.5&#8221;              </td>
-</tr>
-<tr>
-<td> PPI        </td>
-<td>   163        </td>
-<td> 326       </td>
-<td>  326      </td>
-<td>   326     </td>
-<td>  401              </td>
-</tr>
-</tbody>
-</table>
+<pre><code>source 'https://github.com/CocoaPods/Specs.git'
 
+# platform :ios
+platform :ios, '6.0'
+
+# ignore all warnings from all pods
+inhibit_all_warnings!
+
+#Network
+pod 'AFNetworking'
+pod 'SDWebImage'    #功能类似UIImageView+AFNetworking
+pod 'UIActivityIndicator-for-SDWebImage' #SDWebImage的拓展模块
+
+#View
+pod 'TPKeyboardAvoiding'    #根据键盘滑动的各类ScrollView
+pod 'EAIntroView'   #引导页面
+pod 'AwesomeMenu', '~&gt; 1.0.0'   #path菜单
+pod 'RESideMenu', '~&gt; 4.0.7'    #侧边菜单
+pod 'REMenu', '~&gt; 1.10'     #下拉菜单
+pod 'MRProgress', '~&gt; 0.8.1'    #hud(ios7)
+pod 'MBProgressHUD', '~&gt; 0.8'   #hud
+pod 'SVProgressHUD'     #hud
+pod 'MMProgressHUD', :git =&gt; 'https://github.com/lanvige/MMProgressHUD' #hud
+pod 'MMSuperViewController', :git =&gt; 'https://github.com/lanvige/MMSuperViewController.git'     #下拉刷新
+pod 'VTextView', :git =&gt; 'https://github.com/viczy/VTextView.git'   #类似微博文版
+pod 'VPageScrollView', :git =&gt; 'https://github.com/viczy/VPageScrollView.git'   #滚动页（可循环）
+pod 'VPopImageView', :git =&gt; 'https://github.com/viczy/VPopImageView.git'   #可弹出的imageview
+
+#Data
+pod 'NSString+Pinyin'   #中文字母化
+pod 'RegexKitLite'  #正则
+pod 'SSZipArchive'  #压缩
+pod 'FMDB'  #数据库
+pod 'Mantle'    #数据处理
+pod 'JSONKit-NoWarning' #josn
+
+#Tool
+pod 'CocoaLumberjack'   #log
+pod 'ReactiveCocoa'     #函数式编程
+</code></pre>
 </div>
 
 
@@ -160,7 +147,7 @@
 
 
 
-<time class='entry-date' datetime='2014-11-30T22:50:08+08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>10:50 pm</span></time>
+<time class='entry-date' datetime='2015-03-08T10:42:50+08:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>10:42 am</span></time>
       
 
 
@@ -175,10 +162,10 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/11/09/rubyhuan-jing-pei-zhi/" title="Previous Post: Ruby环境配置">&laquo; Ruby环境配置</a>
+        <a class="basic-alignment left" href="/blog/2014/12/06/wang-luo-chu/" title="Previous Post: 网络初窥">&laquo; 网络初窥</a>
       
       
-        <a class="basic-alignment right" href="/blog/2014/11/30/certificates-identifiers-and-profiles/" title="Next Post: Certificates, Identifiers &amp; Profiles">Certificates, Identifiers &amp; Profiles &raquo;</a>
+        <a class="basic-alignment right" href="/blog/2015/03/08/tcp-slash-ipxie-yi/" title="Next Post: TCP/IP协议">TCP/IP协议 &raquo;</a>
       
     </p>
   </footer>
