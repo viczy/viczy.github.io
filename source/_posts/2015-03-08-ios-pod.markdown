@@ -1,0 +1,49 @@
+---
+layout: post
+title: "iOS Pod"
+date: 2015-03-08 10:42:50 +0800
+comments: true
+categories: 
+---
+
+##pod文件样本
+
+	source 'https://github.com/CocoaPods/Specs.git'
+
+	# platform :ios
+	platform :ios, '6.0'
+
+	# ignore all warnings from all pods
+	inhibit_all_warnings!
+	
+	#Network
+	pod 'AFNetworking'
+	pod 'SDWebImage'	#功能类似UIImageView+AFNetworking
+	pod 'UIActivityIndicator-for-SDWebImage' #SDWebImage的拓展模块
+	
+	#View
+	pod 'TPKeyboardAvoiding'	#根据键盘滑动的各类ScrollView
+	pod 'EAIntroView'	#引导页面
+	pod 'AwesomeMenu', '~> 1.0.0'	#path菜单
+	pod 'RESideMenu', '~> 4.0.7'	#侧边菜单
+	pod 'REMenu', '~> 1.10'		#下拉菜单
+	pod 'MRProgress', '~> 0.8.1'	#hud(ios7)
+	pod 'MBProgressHUD', '~> 0.8'	#hud
+	pod 'SVProgressHUD'		#hud
+	pod 'MMProgressHUD', :git => 'https://github.com/lanvige/MMProgressHUD'	#hud
+	pod 'MMSuperViewController', :git => 'https://github.com/lanvige/MMSuperViewController.git' 	#下拉刷新
+	pod 'VTextView', :git => 'https://github.com/viczy/VTextView.git'	#类似微博文版
+	pod 'VPageScrollView', :git => 'https://github.com/viczy/VPageScrollView.git'	#滚动页（可循环）
+	pod 'VPopImageView', :git => 'https://github.com/viczy/VPopImageView.git'	#可弹出的imageview
+	
+	#Data
+	pod 'NSString+Pinyin'	#中文字母化
+	pod 'RegexKitLite'	#正则
+	pod 'SSZipArchive'	#压缩
+	pod 'FMDB'	#数据库
+	pod 'Mantle'	#数据处理
+	pod 'JSONKit-NoWarning'	#josn
+	
+	#Tool
+	pod 'CocoaLumberjack'	#log
+	pod 'ReactiveCocoa'		#函数式编程
