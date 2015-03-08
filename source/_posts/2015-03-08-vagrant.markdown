@@ -1,0 +1,87 @@
+---
+layout: post
+title: "Vagrant"
+date: 2015-03-08 12:14:58 +0800
+comments: true
+categories: 
+---
+
+Vagrant就是为了方便的实现虚拟化环境而设计的，使用Ruby开发，基于VirtualBox等虚拟机管理软件的接口，提供了一个可配置、轻量级的便携式虚拟开发环境。使用Vagrant可以很方便的就建立起来一个虚拟环境，而且可以模拟多台虚拟机，这样我们平时还可以在开发机模拟分布式系统。
+
+Vagrant还会创建一些共享文件夹，用来给你在主机和虚拟机之间共享代码用。这样就使得我们可以在主机上写程序，然后在虚拟机中运行。如此一来团队之间就可以共享相同的开发环境。
+
+##环境
+Vagrant背后用的是Virtual Box作为虚拟机（[Virtual Box下载地址](https://www.virtualbox.org/wiki/Downloads)），Vagrant可以在[Vagrant官网](http://www.vagrantup.com/)下载打包好的版本。在学习下面内容前配置好环境，安装Vitrual Box，Vagrant。
+
+##配置作业系统
+在配置作业系统前，先建立xxx（系统用户名）的开发环境目录
+
+```
+$ mkdir /Users/xxx/vagrant
+```
+每个打包好的作业系统在Vagrant称之为Box，作业系统我们在[vagrantbox](http://www.vagrantbox.es/)上可以获取。我们选择列表中的`Ubuntu Server Precise 14.04 amd64`。
+
+```
+$ vagrant box add Ubuntu-Server-Precise-14.04-amd64 {https://oss-binaries.phusionpassenger.com/vagrant/boxes/latest/ubuntu-14.04-amd64-vbox.box}
+```
+Vagrant将会下载链接的镜像文件，下载好的镜像文件放在`/Users/xxx/.vagrant.d/boxes/`目录下。
+
+查看Vagrant的box列表
+
+```
+$ vagrant box list
+```
+
+
+##初始化作业系统
+
+```
+$ vagrant init Ubuntu-Server-Precise-14.04-amd64
+```
+命令运行结束后将在`/Users/xxx/vagrant/`目录下生成一个`Vagrantfile`文件，该文件是box的配置文件。
+
+	# -*- mode: ruby -*-
+	# vi: set ft=ruby :
+	VAGRANTFILE_API_VERSION = "2"
+	Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+	  config.vm.box = "Ubuntu-Server-Precise-14.04-amd64"
+	  config.vm.network "forwarded_port", guest: 80, host: 8080
+	  config.vm.network "private_network", ip: "192.168.33.10"
+	end
+	
+销毁初始化的资源
+
+```
+$ vagrant destroy
+```
+	
+##运行VM
+
+```
+$ vagrant up
+```
+
+关闭运行的VM
+
+```
+$ vagrant halt
+```
+
+##SSH连接到VM
+
+```
+$ vagrant ssh
+```
+登陆的是预设用户`vagrant`，密码是`vagrant`。
+
+登出的话只需在vm中输入shell命令`exit`,即可登出，关闭的话在vm中输入shell命令`poweroff`，当让也可以采用上面在正常环境输入`vagrant halt`关闭。
+
+####官方网站
+<https://www.vagrantup.com/>
+
+####Github
+<https://github.com/mitchellh/vagrant>
+
+####参考资料
+* <http://gogojimmy.net/2013/05/26/vagrant-tutorial/>
+* <https://github.com/astaxie/Go-in-Action/blob/master/ebook/zh/preface.md>
