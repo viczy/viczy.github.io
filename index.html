@@ -9,7 +9,9 @@
   <meta name="author" content="vic">
 
   
-  <meta name="description" content="OSI 层 数据格式 典型设备 应用层(Application) 表现层(Presentation) 会话层(Session) 传输层(Transport) 组成数据段(Segment) 网络层(Network) 分割组成数据包(Packet) 路由器 数据链路层(DataLink) &hellip;">
+  <meta name="description" content="Ubuntu 通过chef-solo配置好某个Ubuntu server系统，然后通过Vagrant启动并登陆该server系统。升级该系统软件，并安装一些组件。 系统升级 1
+$ sudo apt-get update 安装组件 1
+$ sudo apt-get install build- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -69,6 +71,296 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/03/08/ubuntu-plus-nginx-plus-passenger/">Ubuntu+nginx+passenger</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-03-08T12:15:08+08:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:15 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Ubuntu</h2>
+
+<p>通过<code>chef-solo</code>配置好某个Ubuntu server系统，然后通过<code>Vagrant</code>启动并登陆该server系统。升级该系统软件，并安装一些组件。</p>
+
+<h4>系统升级</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo apt-get update</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>安装组件</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo apt-get install build-essential zlib1g-dev libssl-dev libreadline-dev libyaml-dev libcurl4-openssl-dev curl git-core python-software-properties libsqlite3-0 libsqlite3-dev sqlite3</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>安装PostgreSQL</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo apt-get install postgresql postgresql-contrib libpq-dev</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>安装ruby</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ \curl -L https://get.rvm.io | bash -s stable --ruby</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rvm install 2.1.2
+</span><span class='line'>$ rvm 2.1.2 --default</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>安装rails</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ gem install rails</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Nginx+Passenger</h2>
+
+<h4>安装passenger</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ gem install passenger</span></code></pre></td></tr></table></div></figure>
+
+
+<h5>安装nginx</h5>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rvmsudo passenger-install-nginx-module</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>安装nginx脚本</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ gpg --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ gpg --armor --export 561F9B9CAC40B2F7 | sudo apt-key add -</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo apt-get install apt-transport-https</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo sh -c "echo 'deb https://oss-binaries.phusionpassenger.com/apt/passenger trusty main' &gt;&gt; /etc/apt/sources.list.d/passenger.list"</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo chown root: /etc/apt/sources.list.d/passenger.list</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo chmod 600 /etc/apt/sources.list.d/passenger.list</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo apt-get update</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo apt-get install nginx-full passenger</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>/etc/nginx/sites-enabled/default</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo vi /etc/nginx/sites-enabled/default</span></code></pre></td></tr></table></div></figure>
+
+
+<pre><code>server {
+    listen 80 default;
+    server_name vicspdemo.com; # 这里填写你真实域名
+    root /home/vagrant/apps/spdemo/current/public;# 这里填写你的web启动位置
+    passenger_enabled on;
+}
+</code></pre>
+
+<p><code>/etc/nginx/nginx.conf</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo vi /etc/nginx/nginx.conf</span></code></pre></td></tr></table></div></figure>
+
+
+<pre><code>##
+# Phusion Passenger config
+##
+# Uncomment it if you installed passenger or passenger-enterprise
+##
+passenger_root /usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini;
+passenger_ruby /home/vagrant/.rvm/wrappers/default/ruby;
+# passenger_root /usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini;
+# passenger_ruby /usr/bin/ruby;
+</code></pre>
+
+<h4>参考资料</h4>
+
+<ul>
+<li><a href="https://ruby-china.org/topics/12967">https://ruby-china.org/topics/12967</a></li>
+<li><a href="https://ruby-china.org/wiki/mac-nginx-passenger-rails">https://ruby-china.org/wiki/mac-nginx-passenger-rails</a></li>
+<li><a href="https://gorails.com/deploy/ubuntu/14.04">https://gorails.com/deploy/ubuntu/14.04</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/03/08/vagrant/">Vagrant</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-03-08T12:14:58+08:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:14 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Vagrant就是为了方便的实现虚拟化环境而设计的，使用Ruby开发，基于VirtualBox等虚拟机管理软件的接口，提供了一个可配置、轻量级的便携式虚拟开发环境。使用Vagrant可以很方便的就建立起来一个虚拟环境，而且可以模拟多台虚拟机，这样我们平时还可以在开发机模拟分布式系统。</p>
+
+<p>Vagrant还会创建一些共享文件夹，用来给你在主机和虚拟机之间共享代码用。这样就使得我们可以在主机上写程序，然后在虚拟机中运行。如此一来团队之间就可以共享相同的开发环境。</p>
+
+<h2>环境</h2>
+
+<p>Vagrant背后用的是Virtual Box作为虚拟机（<a href="https://www.virtualbox.org/wiki/Downloads">Virtual Box下载地址</a>），Vagrant可以在<a href="http://www.vagrantup.com/">Vagrant官网</a>下载打包好的版本。在学习下面内容前配置好环境，安装Vitrual Box，Vagrant。</p>
+
+<h2>配置作业系统</h2>
+
+<p>在配置作业系统前，先建立xxx（系统用户名）的开发环境目录</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mkdir /Users/xxx/vagrant</span></code></pre></td></tr></table></div></figure>
+
+
+<p>每个打包好的作业系统在Vagrant称之为Box，作业系统我们在<a href="http://www.vagrantbox.es/">vagrantbox</a>上可以获取。我们选择列表中的<code>Ubuntu Server Precise 14.04 amd64</code>。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ vagrant box add Ubuntu-Server-Precise-14.04-amd64 {https://oss-binaries.phusionpassenger.com/vagrant/boxes/latest/ubuntu-14.04-amd64-vbox.box}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Vagrant将会下载链接的镜像文件，下载好的镜像文件放在<code>/Users/xxx/.vagrant.d/boxes/</code>目录下。</p>
+
+<p>查看Vagrant的box列表</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ vagrant box list</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>初始化作业系统</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ vagrant init Ubuntu-Server-Precise-14.04-amd64</span></code></pre></td></tr></table></div></figure>
+
+
+<p>命令运行结束后将在<code>/Users/xxx/vagrant/</code>目录下生成一个<code>Vagrantfile</code>文件，该文件是box的配置文件。</p>
+
+<pre><code># -*- mode: ruby -*-
+# vi: set ft=ruby :
+VAGRANTFILE_API_VERSION = "2"
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "Ubuntu-Server-Precise-14.04-amd64"
+  config.vm.network "forwarded_port", guest: 80, host: 8080
+  config.vm.network "private_network", ip: "192.168.33.10"
+end
+</code></pre>
+
+<p>销毁初始化的资源</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ vagrant destroy</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>运行VM</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ vagrant up</span></code></pre></td></tr></table></div></figure>
+
+
+<p>关闭运行的VM</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ vagrant halt</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>SSH连接到VM</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ vagrant ssh</span></code></pre></td></tr></table></div></figure>
+
+
+<p>登陆的是预设用户<code>vagrant</code>，密码是<code>vagrant</code>。</p>
+
+<p>登出的话只需在vm中输入shell命令<code>exit</code>,即可登出，关闭的话在vm中输入shell命令<code>poweroff</code>，当让也可以采用上面在正常环境输入<code>vagrant halt</code>关闭。</p>
+
+<h4>官方网站</h4>
+
+<p><a href="https://www.vagrantup.com/">https://www.vagrantup.com/</a></p>
+
+<h4>Github</h4>
+
+<p><a href="https://github.com/mitchellh/vagrant">https://github.com/mitchellh/vagrant</a></p>
+
+<h4>参考资料</h4>
+
+<ul>
+<li><a href="http://gogojimmy.net/2013/05/26/vagrant-tutorial/">http://gogojimmy.net/2013/05/26/vagrant-tutorial/</a></li>
+<li><a href="https://github.com/astaxie/Go-in-Action/blob/master/ebook/zh/preface.md">https://github.com/astaxie/Go-in-Action/blob/master/ebook/zh/preface.md</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1744,36 +2036,9 @@ $ ssh-copy-id -i ~/.ssh/id_ecdsa.pub -p 221 username@remote-server.org
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/04/05/start/">Start</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-04-05T18:05:30+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>6:05 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>The Blog Start</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
+    
+      <a class="prev" href="/posts/2">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -1786,6 +2051,14 @@ $ ssh-copy-id -i ~/.ssh/id_ecdsa.pub -p 221 username@remote-server.org
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/03/08/ubuntu-plus-nginx-plus-passenger/">Ubuntu+nginx+passenger</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/08/vagrant/">Vagrant</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/03/08/tcp-slash-ipxie-yi/">TCP/IP协议</a>
       </li>
     
@@ -1795,14 +2068,6 @@ $ ssh-copy-id -i ~/.ssh/id_ecdsa.pub -p 221 username@remote-server.org
     
       <li class="post">
         <a href="/blog/2014/12/06/wang-luo-chu/">网络初窥</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/12/06/railshuan-jing-pei-zhi/">Rails环境配置</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/11/30/certificates-identifiers-and-profiles/">Certificates, Identifiers &amp; Profiles</a>
       </li>
     
   </ul>
