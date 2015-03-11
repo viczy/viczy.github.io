@@ -9,8 +9,7 @@
   <meta name="author" content="vic">
 
   
-  <meta name="description" content="The Blog Start
-">
+  <meta name="description" content="SSH(Secure Shell) 密钥对可以让您方便的登录到 SSH 服务器，而无需输入密码。由于您无需发送您的密码到网络中，SSH 密钥对被认为是更加安全的方式。再加上使用密码短语 (passphrase) 的使用，安全性会更上一层楼。 常见的密钥规则有RSA1，RSA2和DSA。 SSH &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +75,114 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2014/08/27/title/">Ssh 免输入密码</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-27T22:39:56+08:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>10:39 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><!-- #ssh免输入 -->
+
+
+<p>SSH(Secure Shell) 密钥对可以让您方便的登录到 SSH 服务器，而无需输入密码。由于您无需发送您的密码到网络中，SSH 密钥对被认为是更加安全的方式。再加上使用密码短语 (passphrase) 的使用，安全性会更上一层楼。</p>
+
+<p>常见的密钥规则有RSA1，RSA2和DSA。</p>
+
+<p>SSH 密钥对总是成双出现的，一把公钥，一把私钥。公钥可以自由的放在您所需要连接的 SSH 服务器上，而私钥必须稳妥的保管好。</p>
+
+<p>所谓&#8221;公钥登录&#8221;，原理很简单，就是用户将自己的公钥储存在远程主机上。登录的时候，远程主机会向用户发送一段随机字符串，用户用自己的私钥加密后，再发回来。远程主机用事先储存的公钥进行解密，如果成功，就证明用户是可信的，直接允许登录 shell，不再要求密码。这样子，我们即可保证了整个登录过程的安全，也不会受到中间人攻击。</p>
+
+<h2>生成</h2>
+
+<p>这里用RSA2生成密钥对。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ ssh-keygen -t rsa </span></code></pre></td></tr></table></div></figure>
+
+
+<pre><code>Generating public/private rsa key pair.
+
+Enter file in which to save the key (/home/username/.ssh/id_rsa): [按 Enter 使用默认值（建议）]
+
+Enter passphrase: 输入你的 Passphrase
+
+Enter same passphrase again: 再一次输入你的 Passphrase
+
+Your identification has been saved in /home/username/.ssh/id_rsa.
+
+Your public key has been saved in /home/username/.ssh/id_rsa.pub.
+
+The key fingerprint is: cc:e8:a9:da:a3:41:c6:a9:97:52:59:ef:0c:cf:45:b6 username@abc.com
+</code></pre>
+
+<p>上面的操作中你可以不输入Passphrase,按回车键可以跳过，这样的话下次你登陆服务器是不需要输入Passphrase。</p>
+
+<h2>公钥放到服务器</h2>
+
+<p>如果你使用了默认方式生成了密钥对</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ ssh-copy-id remote-server.org</span></code></pre></td></tr></table></div></figure>
+
+
+<p>指定密钥文件</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ ssh-copy-id remote-server.org</span></code></pre></td></tr></table></div></figure>
+
+
+<pre><code>指定远程服务器监听端口
+
+```
+$ ssh-copy-id -i ~/.ssh/id_rsa.pub username@remote-server.org
+```
+
+如果没有`ssh-copy-id`命令，请先安装
+
+```
+$ ssh-copy-id -i ~/.ssh/id_ecdsa.pub -p 221 username@remote-server.org
+```
+</code></pre>
+
+<p>服务器要支持openssh，如果不支持，先安装（以下命令在服务器运行。以下是ubuntu服务器）</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>~$ sudo apt-get install openssh-server </span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果生成过程中有输入Passphrase，那么会每次登陆远程服务器还要输入passphrase，这样太麻烦了，那么你还可能需要使用<code>ssh-agent</code>。这里就不做详细介绍了，请参照<a href="http://josephj.com/article/understand-ssh-key/">此文章</a></p>
+
+<h2>登陆到服务器</h2>
+
+<h4>参考资料</h4>
+
+<ul>
+<li><a href="https://wiki.archlinux.org/index.php/SSH_Keys_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">https://wiki.archlinux.org/index.php/SSH_Keys_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)</a></li>
+<li><a href="http://josephj.com/article/understand-ssh-key/">http://josephj.com/article/understand-ssh-key/</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2014/04/05/start/">Start</a></h1>
     
     
@@ -115,6 +222,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/03/11/app-extension-ios/">App-Extension-iOS</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/03/08/ubuntu-plus-nginx-plus-passenger/">Ubuntu+nginx+passenger</a>
       </li>
     
@@ -128,10 +239,6 @@
     
       <li class="post">
         <a href="/blog/2015/03/08/ios-pod/">iOS Pod</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/12/06/wang-luo-chu/">网络初窥</a>
       </li>
     
   </ul>
