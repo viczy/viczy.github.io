@@ -4,7 +4,7 @@
   <title><![CDATA[<三每/>]]></title>
   <link href="http://viczy.github.io/atom.xml" rel="self"/>
   <link href="http://viczy.github.io/"/>
-  <updated>2015-03-11T08:35:50+08:00</updated>
+  <updated>2015-03-18T22:43:13+08:00</updated>
   <id>http://viczy.github.io/</id>
   <author>
     <name><![CDATA[vic]]></name>
@@ -12,6 +12,70 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[TextKit]]></title>
+    <link href="http://viczy.github.io/blog/2015/03/18/textkit/"/>
+    <updated>2015-03-18T22:36:23+08:00</updated>
+    <id>http://viczy.github.io/blog/2015/03/18/textkit</id>
+    <content type="html"><![CDATA[<h5>ios7以前的UIKit控件的实现如下图所示：</h5>
+
+<p><img src="images/TextKit/ios7-system.png" alt="7-system" /></p>
+
+<h5>ios7之后的UIkit控件实现如下图所示</h5>
+
+<p><img src="images/TextKit/ios7+system.png" alt="7+system" /></p>
+
+<p>通过比较可以发现iOS7之前的所有版本，（几乎）所有的文本都是 WebKit 来处理的。对：WebKit，web 浏览器引擎。所有 UILabel、UITextField，以及 UITextView 都在后台以某种方式使用Webkit来进行文本布局和渲染。而在iOS7之后UILabel、UITextField， UITextView的文本布局和渲染将通过TextKit实现。</p>
+
+<h2>TextKit</h2>
+
+<p>TextKit的结构如下图所示：
+<img src="images/TextKit/system.png" alt="system" /></p>
+
+<h3>NSTextStorage</h3>
+
+<p>如果你把文本系统看做一个模型-视图-控制器（MVC）架构，这个类代表的是模型。NSTextStorage 是一个中枢，它管理所有的文本和属性信息。系统只提供了两个存取器方法存取它们，并另外提供了两个方法来分别修改文本和属性。后面我们将进一步了解这些方法。现在重要的是你得理解 NSTextStorage 是从它的父类 NSAttributedString 继承了这些方法。这就很清楚了，NSTextStorage——从文本系统看来——仅仅是一个带有属性的字符串，附带一些扩展。这两者唯一的重大不同点是 NSTextStorage 包含了一个方法，可以把所有对其内容进行的修改以通知的形式发送出来。</p>
+
+<p><a href="https://developer.apple.com/library/prerelease/ios/documentation/UIKit/Reference/NSTextStorage_Class_TextKit/index.html">官方文档</a></p>
+
+<h3>NSLayoutManager</h3>
+
+<p>Layout Manager 是中心组件，它把所有组件粘合在一起：</p>
+
+<ol>
+<li>这个管理器监听 Text Storage 中文本或属性改变的通知，一旦接收到通知就触发布局进程。</li>
+<li>从 Text Storage 提供的文本开始，它将所有的字符翻译为字形（Glyph）[^2]。</li>
+<li>一旦字形全部生成，这个管理器向它的 Text Containers 查询文本可用以绘制的区域。</li>
+<li>然后这些区域被行逐步填充，而行又被字形逐步填充。一旦一行填充完毕，下一行开始填充。</li>
+<li>对于每一行，布局管理器必须考虑断行行为（放不下的单词必须移到下一行）、连字符、内联的图像附件等等。</li>
+<li>当布局完成，文本的当前显示状态被设为无效，然后 Layout Manager 将前面几步排版好的文本设给 Text View。</li>
+</ol>
+
+
+<p><a href="https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSLayoutManager_Class/">官方文档</a></p>
+
+<h3>NSTextContainer</h3>
+
+<p>每个 Text View 定义了一个文本可以绘制的区域。为此，每个 Text View 都有一个 Text Container，它精确地描述了这个可用的区域。在简单的情况下，这是一个垂直的无限大的矩形区域。文本被填充到这个区域，并且 Text View 允许用户滚动它。然而，在更高级的情况下，这个区域可能是一个无限大的矩形。例如，当渲染一本书时，每一页都有最大的高度和宽度。 Text Container 会定义这个大小，并且不接受任何超出的文本。相同情况下，一幅图像可能占据了页面的一部分，文本应该沿着它的边缘重新排版。这也是由 Text Container 来处理的，我们会在后面的例子中看到这一点。</p>
+
+<p><a href="https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSTextContainer_Class/#//apple_ref/c/tdef/NSLineMovementDirection">官方文档</a></p>
+
+<h3>UITextView</h3>
+
+<p>堆栈的另一头是实际的视图。在 TextKit 中，有两个目的：第一，它是文本系统用来绘制的视图。文本视图它自己并不会做任何绘制；它仅仅提供一个供其它类绘制的区域。作为视图层级机构中唯一的组件，第二个目的是处理所有的用户交互。具体来说，Text View 实现 UITextInput 的协议来处理键盘事件，它为用户提供了一种途径来设置一个插入点或选择文本。它并不对文本做任何实际上的改变，仅仅将这些改变请求转发给刚刚讨论的 Text Storage。</p>
+
+<p><a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITextView_Class/">官方文档</a></p>
+
+<h4>参考资料</h4>
+
+<ul>
+<li><a href="http://objccn.io/issue-5-1/">http://objccn.io/issue-5-1/</a></li>
+<li><a href="http://www.raywenderlich.com/77092/text-kit-tutorial-swift">http://www.raywenderlich.com/77092/text-kit-tutorial-swift</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[App-Extension-iOS]]></title>

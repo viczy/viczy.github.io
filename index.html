@@ -9,7 +9,7 @@
   <meta name="author" content="vic">
 
   
-  <meta name="description" content="Extension环境 iOS8+ Extension概述 Extension让app之间的数据交互成为可能。用户可以在app中使用其他应用提供的功能，而无需离开当前的应用。 在iOS 8系统之前，每一个app在物理上都是彼此独立的，app之间不能互访彼此的私有数据。 而在引入扩展之后， &hellip;">
+  <meta name="description" content="ios7以前的UIKit控件的实现如下图所示： ios7之后的UIkit控件实现如下图所示 通过比较可以发现iOS7之前的所有版本，（几乎）所有的文本都是 WebKit 来处理的。对：WebKit，web 浏览器引擎。所有 UILabel、UITextField，以及 UITextView &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -69,6 +69,90 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/03/18/textkit/">TextKit</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-03-18T22:36:23+08:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>10:36 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h5>ios7以前的UIKit控件的实现如下图所示：</h5>
+
+<p><img src="images/TextKit/ios7-system.png" alt="7-system" /></p>
+
+<h5>ios7之后的UIkit控件实现如下图所示</h5>
+
+<p><img src="images/TextKit/ios7+system.png" alt="7+system" /></p>
+
+<p>通过比较可以发现iOS7之前的所有版本，（几乎）所有的文本都是 WebKit 来处理的。对：WebKit，web 浏览器引擎。所有 UILabel、UITextField，以及 UITextView 都在后台以某种方式使用Webkit来进行文本布局和渲染。而在iOS7之后UILabel、UITextField， UITextView的文本布局和渲染将通过TextKit实现。</p>
+
+<h2>TextKit</h2>
+
+<p>TextKit的结构如下图所示：
+<img src="images/TextKit/system.png" alt="system" /></p>
+
+<h3>NSTextStorage</h3>
+
+<p>如果你把文本系统看做一个模型-视图-控制器（MVC）架构，这个类代表的是模型。NSTextStorage 是一个中枢，它管理所有的文本和属性信息。系统只提供了两个存取器方法存取它们，并另外提供了两个方法来分别修改文本和属性。后面我们将进一步了解这些方法。现在重要的是你得理解 NSTextStorage 是从它的父类 NSAttributedString 继承了这些方法。这就很清楚了，NSTextStorage——从文本系统看来——仅仅是一个带有属性的字符串，附带一些扩展。这两者唯一的重大不同点是 NSTextStorage 包含了一个方法，可以把所有对其内容进行的修改以通知的形式发送出来。</p>
+
+<p><a href="https://developer.apple.com/library/prerelease/ios/documentation/UIKit/Reference/NSTextStorage_Class_TextKit/index.html">官方文档</a></p>
+
+<h3>NSLayoutManager</h3>
+
+<p>Layout Manager 是中心组件，它把所有组件粘合在一起：</p>
+
+<ol>
+<li>这个管理器监听 Text Storage 中文本或属性改变的通知，一旦接收到通知就触发布局进程。</li>
+<li>从 Text Storage 提供的文本开始，它将所有的字符翻译为字形（Glyph）[^2]。</li>
+<li>一旦字形全部生成，这个管理器向它的 Text Containers 查询文本可用以绘制的区域。</li>
+<li>然后这些区域被行逐步填充，而行又被字形逐步填充。一旦一行填充完毕，下一行开始填充。</li>
+<li>对于每一行，布局管理器必须考虑断行行为（放不下的单词必须移到下一行）、连字符、内联的图像附件等等。</li>
+<li>当布局完成，文本的当前显示状态被设为无效，然后 Layout Manager 将前面几步排版好的文本设给 Text View。</li>
+</ol>
+
+
+<p><a href="https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSLayoutManager_Class/">官方文档</a></p>
+
+<h3>NSTextContainer</h3>
+
+<p>每个 Text View 定义了一个文本可以绘制的区域。为此，每个 Text View 都有一个 Text Container，它精确地描述了这个可用的区域。在简单的情况下，这是一个垂直的无限大的矩形区域。文本被填充到这个区域，并且 Text View 允许用户滚动它。然而，在更高级的情况下，这个区域可能是一个无限大的矩形。例如，当渲染一本书时，每一页都有最大的高度和宽度。 Text Container 会定义这个大小，并且不接受任何超出的文本。相同情况下，一幅图像可能占据了页面的一部分，文本应该沿着它的边缘重新排版。这也是由 Text Container 来处理的，我们会在后面的例子中看到这一点。</p>
+
+<p><a href="https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSTextContainer_Class/#//apple_ref/c/tdef/NSLineMovementDirection">官方文档</a></p>
+
+<h3>UITextView</h3>
+
+<p>堆栈的另一头是实际的视图。在 TextKit 中，有两个目的：第一，它是文本系统用来绘制的视图。文本视图它自己并不会做任何绘制；它仅仅提供一个供其它类绘制的区域。作为视图层级机构中唯一的组件，第二个目的是处理所有的用户交互。具体来说，Text View 实现 UITextInput 的协议来处理键盘事件，它为用户提供了一种途径来设置一个插入点或选择文本。它并不对文本做任何实际上的改变，仅仅将这些改变请求转发给刚刚讨论的 Text Storage。</p>
+
+<p><a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITextView_Class/">官方文档</a></p>
+
+<h4>参考资料</h4>
+
+<ul>
+<li><a href="http://objccn.io/issue-5-1/">http://objccn.io/issue-5-1/</a></li>
+<li><a href="http://www.raywenderlich.com/77092/text-kit-tutorial-swift">http://www.raywenderlich.com/77092/text-kit-tutorial-swift</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1877,169 +1961,6 @@ pod 'ReactiveCocoa'     #函数式编程
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/11/09/rubyhuan-jing-pei-zhi/">Ruby环境配置</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-11-09T13:21:34+08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>1:21 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><!-- # ruby
-
-![Ruby icon](http://learn-rails.com/images/ruby.png) -->
-
-
-<h2>ruby安装</h2>
-
-<p>ruby安装方式有下面几种</p>
-
-<ul>
-<li>原始码编译安装，下载相应版本的安装包安装（<a href="https://www.ruby-lang.org/zh_cn/downloads/">下载地址</a>）</li>
-<li>第三方工具安装</li>
-<li>少数的套件管理工具支持ruby</li>
-</ul>
-
-
-<p>考虑到多版本的管理，这里使用第二种方式（第三方工具）安装。第三方工具安装有RVM和Rbenv可选</p>
-
-<h3>RVM</h3>
-
-<p>rvm可以通过brew安装（<a href="http://brew.sh/index_zh-tw.html">brew的介绍与安装</a>），在安装前需要先安装装git版本控制</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ brew install git
-</span><span class='line'>$ brew install readline
-</span><span class='line'>$ brew link readline</span></code></pre></td></tr></table></div></figure>
-
-
-<p>然后安装rvm</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ \curl -L https://get.rvm.io | bash -s stable --ruby</span></code></pre></td></tr></table></div></figure>
-
-
-<p>查看rvm的版本，来验证rvm是否已安装</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ rvm -v</span></code></pre></td></tr></table></div></figure>
-
-
-<p>当你的rvm不是最新版本，可以升级你的rvm版本</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ rvm get stable</span></code></pre></td></tr></table></div></figure>
-
-
-<p>接下来就可以通过rvm来安装ruby，下面将安装版本2.1.2的ruby，并将2.1.2版本作为当前预设版本</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ rvm install 2.1.2
-</span><span class='line'>$ rvm 2.1.2 --default</span></code></pre></td></tr></table></div></figure>
-
-
-<p>查看ruby版本号，可以确认当前预设ruby的版本</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ ruby -v</span></code></pre></td></tr></table></div></figure>
-
-
-<p>如果还需要安装其他的版本的ruby，可以先查看可以安装的ruby版本，并选择你需要安装的版本</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ rvm list known</span></code></pre></td></tr></table></div></figure>
-
-
-<p>当安装了多个版本ruby后，查看已经安装了ruby</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ rvm list</span></code></pre></td></tr></table></div></figure>
-
-
-<p>这时如果你希望改变ruby的预设版本可以通过<code>rvm xxx -default</code> 来更新预设版本，这样的话每次打开个terminal窗口都会使用该版本的ruby。除了预设版本之外，如果你只在当前的terminal窗口使用某版本的ruby</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ rvm use 1.9.3</span></code></pre></td></tr></table></div></figure>
-
-
-<p>切换到系统内建的ruby版本</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ rvm system</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>rbenv</h3>
-
-<ul>
-<li><a href="https://github.com/sstephenson/rbenv">rbenv</a></li>
-<li><a href="https://ruby-china.org/wiki/rbenv-guide">rbenv使用</a></li>
-</ul>
-
-
-<h2>ruby使用</h2>
-
-<h3>交互式运行Ruby</h3>
-
-<p>要以交互式的运行ruby，只需要输入</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ ruby</span></code></pre></td></tr></table></div></figure>
-
-
-<p>然后输入你的ruby程序，以文件结束符结束（Ctrl+D）。</p>
-
-<p>不多这样的方式操作比较麻烦，irb相对而言会是个更好地选择，irb是一个Ruby Shell。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ irb</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>运行Ruby程序文件</h3>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ ruby rubydemo.rb</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Ruby查看文档</h3>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ ri puts</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>官方网站</h4>
-
-<ul>
-<li>中文<a href="https://www.ruby-lang.org/zh_tw/">https://www.ruby-lang.org/zh_tw/</a></li>
-<li>英文<a href="https://www.ruby-lang.org/en/">https://www.ruby-lang.org/en/</a></li>
-</ul>
-
-
-<h4>Github</h4>
-
-<p><a href="https://github.com/ruby/ruby">https://github.com/ruby/ruby</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/2">&larr; Older</a>
@@ -2055,6 +1976,10 @@ pod 'ReactiveCocoa'     #函数式编程
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/03/18/textkit/">TextKit</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/03/11/app-extension-ios/">App-Extension-iOS</a>
       </li>
     
@@ -2068,10 +1993,6 @@ pod 'ReactiveCocoa'     #函数式编程
     
       <li class="post">
         <a href="/blog/2015/03/08/tcp-slash-ipxie-yi/">TCP/IP协议</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/03/08/ios-pod/">iOS Pod</a>
       </li>
     
   </ul>

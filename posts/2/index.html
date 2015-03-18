@@ -9,7 +9,9 @@
   <meta name="author" content="vic">
 
   
-  <meta name="description" content="SSH(Secure Shell) 密钥对可以让您方便的登录到 SSH 服务器，而无需输入密码。由于您无需发送您的密码到网络中，SSH 密钥对被认为是更加安全的方式。再加上使用密码短语 (passphrase) 的使用，安全性会更上一层楼。 常见的密钥规则有RSA1，RSA2和DSA。 SSH &hellip;">
+  <meta name="description" content="ruby安装 ruby安装方式有下面几种 原始码编译安装，下载相应版本的安装包安装（下载地址）
+第三方工具安装
+少数的套件管理工具支持ruby 考虑到多版本的管理，这里使用第二种方式（第三方工具）安装。第三方工具安装有RVM和Rbenv可选 RVM rvm可以通过brew安装（ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -69,6 +71,169 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/11/09/rubyhuan-jing-pei-zhi/">Ruby环境配置</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-11-09T13:21:34+08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>1:21 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><!-- # ruby
+
+![Ruby icon](http://learn-rails.com/images/ruby.png) -->
+
+
+<h2>ruby安装</h2>
+
+<p>ruby安装方式有下面几种</p>
+
+<ul>
+<li>原始码编译安装，下载相应版本的安装包安装（<a href="https://www.ruby-lang.org/zh_cn/downloads/">下载地址</a>）</li>
+<li>第三方工具安装</li>
+<li>少数的套件管理工具支持ruby</li>
+</ul>
+
+
+<p>考虑到多版本的管理，这里使用第二种方式（第三方工具）安装。第三方工具安装有RVM和Rbenv可选</p>
+
+<h3>RVM</h3>
+
+<p>rvm可以通过brew安装（<a href="http://brew.sh/index_zh-tw.html">brew的介绍与安装</a>），在安装前需要先安装装git版本控制</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ brew install git
+</span><span class='line'>$ brew install readline
+</span><span class='line'>$ brew link readline</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然后安装rvm</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ \curl -L https://get.rvm.io | bash -s stable --ruby</span></code></pre></td></tr></table></div></figure>
+
+
+<p>查看rvm的版本，来验证rvm是否已安装</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rvm -v</span></code></pre></td></tr></table></div></figure>
+
+
+<p>当你的rvm不是最新版本，可以升级你的rvm版本</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rvm get stable</span></code></pre></td></tr></table></div></figure>
+
+
+<p>接下来就可以通过rvm来安装ruby，下面将安装版本2.1.2的ruby，并将2.1.2版本作为当前预设版本</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rvm install 2.1.2
+</span><span class='line'>$ rvm 2.1.2 --default</span></code></pre></td></tr></table></div></figure>
+
+
+<p>查看ruby版本号，可以确认当前预设ruby的版本</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ ruby -v</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果还需要安装其他的版本的ruby，可以先查看可以安装的ruby版本，并选择你需要安装的版本</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rvm list known</span></code></pre></td></tr></table></div></figure>
+
+
+<p>当安装了多个版本ruby后，查看已经安装了ruby</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rvm list</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这时如果你希望改变ruby的预设版本可以通过<code>rvm xxx -default</code> 来更新预设版本，这样的话每次打开个terminal窗口都会使用该版本的ruby。除了预设版本之外，如果你只在当前的terminal窗口使用某版本的ruby</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rvm use 1.9.3</span></code></pre></td></tr></table></div></figure>
+
+
+<p>切换到系统内建的ruby版本</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rvm system</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>rbenv</h3>
+
+<ul>
+<li><a href="https://github.com/sstephenson/rbenv">rbenv</a></li>
+<li><a href="https://ruby-china.org/wiki/rbenv-guide">rbenv使用</a></li>
+</ul>
+
+
+<h2>ruby使用</h2>
+
+<h3>交互式运行Ruby</h3>
+
+<p>要以交互式的运行ruby，只需要输入</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ ruby</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然后输入你的ruby程序，以文件结束符结束（Ctrl+D）。</p>
+
+<p>不多这样的方式操作比较麻烦，irb相对而言会是个更好地选择，irb是一个Ruby Shell。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ irb</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>运行Ruby程序文件</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ ruby rubydemo.rb</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Ruby查看文档</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ ri puts</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>官方网站</h4>
+
+<ul>
+<li>中文<a href="https://www.ruby-lang.org/zh_tw/">https://www.ruby-lang.org/zh_tw/</a></li>
+<li>英文<a href="https://www.ruby-lang.org/en/">https://www.ruby-lang.org/en/</a></li>
+</ul>
+
+
+<h4>Github</h4>
+
+<p><a href="https://github.com/ruby/ruby">https://github.com/ruby/ruby</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -222,6 +387,10 @@ $ ssh-copy-id -i ~/.ssh/id_ecdsa.pub -p 221 username@remote-server.org
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/03/18/textkit/">TextKit</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/03/11/app-extension-ios/">App-Extension-iOS</a>
       </li>
     
@@ -235,10 +404,6 @@ $ ssh-copy-id -i ~/.ssh/id_ecdsa.pub -p 221 username@remote-server.org
     
       <li class="post">
         <a href="/blog/2015/03/08/tcp-slash-ipxie-yi/">TCP/IP协议</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/03/08/ios-pod/">iOS Pod</a>
       </li>
     
   </ul>
